@@ -1,11 +1,23 @@
 <script lang="ts">
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
+	import { isLightMode } from '$lib/themeStore';
 
 	// Floating UI for Popups
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
-	import { storePopup } from '@skeletonlabs/skeleton';
+	import { storePopup, LightSwitch } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
+	let lightMode = true;
+
+	$: isLightMode.subscribe(value => {
+		lightMode = value;
+	});
+
+	function updateStore() {
+		isLightMode.set(lightMode);
+	}
+
 </script>
 
 <AppShell>
@@ -13,33 +25,50 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Skeleton</strong>
+				<strong class="text-xl uppercase">HistoDuo</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<a
 					class="btn btn-sm variant-ghost-surface"
-					href="https://discord.gg/EXqV7W8MtY"
+					href="#"
 					target="_blank"
 					rel="noreferrer"
 				>
-					Discord
+					Order
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
-					href="https://twitter.com/SkeletonUI"
+					href="#"
 					target="_blank"
 					rel="noreferrer"
 				>
-					Twitter
+					Validation
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"
-					href="https://github.com/skeletonlabs/skeleton"
+					href="#"
 					target="_blank"
 					rel="noreferrer"
 				>
-					GitHub
+					Result
 				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="#"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Statistic
+				</a>
+				<a
+					class="btn btn-sm variant-ghost-surface"
+					href="#"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Configuration
+				</a>
+				<LightSwitch on:click={() => isLightMode.update(n => !n)}/>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
